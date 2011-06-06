@@ -1,0 +1,5 @@
+README FOR OF_EXTENDED
+
+This is a set of libraries which should exist as addons, but I neglected to do it in the firstplace, so now we have to live with it.
+
+They include several redundant libraries (such as the SMM xml parser, but I did that for my own edification and adaptability), as well as a few original libraries, such as the interface objects and the file parsing functions. I'll add more to this at a later date.
