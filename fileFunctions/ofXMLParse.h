@@ -59,10 +59,10 @@ public:
 
 class ofXML {
 	vector<ofTag> nodes;
-	string filename;
 	stack<ofTag *> prevLevel;
 	ofTag * currentLevel;
 public:
+  string filename;
 	ofXML(){
 		nodes.reserve(100);
 		currentLevel=0;

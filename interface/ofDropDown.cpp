@@ -367,6 +367,11 @@ int ofDropDown::getChoiceNumber()
 	return curPos;
 }
 
+int ofDropDown::getIndex()
+{
+  return curPos;
+}
+
 string ofDropDown::getString()
 {
 	return values[curPos];

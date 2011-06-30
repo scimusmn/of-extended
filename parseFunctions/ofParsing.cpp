@@ -18,6 +18,27 @@ bool isDelim(char comp, string delims)
 	return ret;
 }
 
+double operaterByChar(double a, char op, double b){
+  int ret=0;
+  switch (op) {
+    case '-':
+      ret=a-b;
+      break;
+    case '+':
+      ret=a+b;
+      break;
+    case '/':
+      ret=a/b;
+      break;
+    case '*':
+      ret=a*b;
+      break;
+    default:
+      break;
+  }
+  return ret;
+}
+
 string getWord(string buffer,unsigned int & first, string delims)
 {
 	string ret;

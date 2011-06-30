@@ -143,3 +143,59 @@ void ofVMouse::update()
 		if(timeNow>startTime+sumTime) running=false;
 	}
 }
+
+void ofVMouse::updateNextEvent()
+{
+	unsigned long sumTime=elapsedAtPause;
+	bool ran=false;
+	unsigned long timeNow=ofGetElapsedTimeMillis();
+	if(running){
+    if(curEvent.type==OF_VMOUSE_END) running=false,curEvent.type=OF_VMOUSE_BLANK;
+    else if(curEvent.type==OF_VMOUSE_BLANK){
+      appPtr->keyPressed('n');
+      startTime=ofGetElapsedTimeMillis();
+    }
+    else if (!ran&&!curEvent.executed&&startTime+sumTime+curEvent.duration>timeNow) {
+      double percentDone=double(timeNow-(startTime+sumTime))/curEvent.duration;
+      x=x0+percentDone*double(curEvent.x()-x0);
+      y=y0+percentDone*double(curEvent.y()-y0);
+      if(mouseState) appPtr->mouseDragged(x, y, VMOUSE_BUTTON);
+      else appPtr->mouseMoved(x, y);
+      ran=true;
+    }
+    else if (!curEvent.executed&&startTime+sumTime+curEvent.duration<timeNow) {
+      curEvent.executed=true;
+      x=x0=curEvent.x();
+      y=y0=curEvent.y();
+      if(curEvent.type==OF_VMOUSE_CLICK_DOWN){
+        mouseState=true;
+        appPtr->mousePressed(x, y, VMOUSE_BUTTON);
+      }
+      else if(curEvent.type==OF_VMOUSE_CLICK_UP){
+        mouseState=false;
+        appPtr->mouseReleased(x, y, VMOUSE_BUTTON);
+      }
+      
+      //******* signal the app to grab next event
+      appPtr->keyPressed('n');
+      
+      startTime=ofGetElapsedTimeMillis();
+    }
+		//if(timeNow>startTime+sumTime) running=false;
+	}
+}
+
+ofTag ofVMouse::getRequestEvent()
+{
+  
+}
+
+void ofVMouse::nextEvent(vMouseType eventType, ofInterObj & obj, int _x, int _y, double timeInSeconds)
+{
+  curEvent=ofVMouseEvent(eventType,obj, _x, _y,timeInSeconds*1000);
+}
+
+void ofVMouse::nextEvent(vMouseType eventType, int _x, int _y, double timeInSeconds)
+{
+  curEvent=ofVMouseEvent(eventType, _x, _y,timeInSeconds*1000);
+}

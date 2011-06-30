@@ -12,8 +12,10 @@
 #include "ofMain.h"
 #include "ofExtended.h"
 
+#define VMOUSE_BUTTON 5
+
 enum vMouseType {
-	OF_VMOUSE_CLICK_DOWN, OF_VMOUSE_MOVE_TO, OF_VMOUSE_CLICK_UP
+	OF_VMOUSE_CLICK_DOWN, OF_VMOUSE_MOVE_TO, OF_VMOUSE_CLICK_UP, OF_VMOUSE_END, OF_VMOUSE_BLANK 
 };
 
 class ofVMouseEvent{
@@ -24,6 +26,10 @@ public:
 	vMouseType type;
 	int xPos, yPos;
 	ofInterObj * objPtr;
+  ofVMouseEvent(){ 
+    type=OF_VMOUSE_BLANK;
+    executed=xPos=yPos=duration=0;
+  }
 	ofVMouseEvent(vMouseType eventType, int _x, int _y, unsigned long time);
 	ofVMouseEvent(vMouseType eventType, ofInterObj & k, unsigned long time);
 	ofVMouseEvent(vMouseType eventType, ofInterObj & k, int _x, int _y, unsigned long time);
@@ -34,6 +40,7 @@ public:
 class ofVMouse{
 protected:
 	vector<ofVMouseEvent> events;
+  ofVMouseEvent curEvent;
 	bool mouseState;
 	unsigned long startTime,elapsedAtPause;
 	bool running;
@@ -54,4 +61,8 @@ public:
 	void pause();
 	void reset();
 	void update();
+  void updateNextEvent();
+  ofTag getRequestEvent();
+  void nextEvent(vMouseType eventType, ofInterObj & k, int xInc, int yInc, double time);
+  void nextEvent(vMouseType eventType, int xInc, int yInc, double time);
 };

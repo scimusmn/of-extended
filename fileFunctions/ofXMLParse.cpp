@@ -67,7 +67,7 @@ string ofTag::getAttributeName(int i)
 
 string ofTag::getAttribute(string attributeName)
 {
-	string ret;
+	string ret="";
 	for (unsigned int i=0; i<attributes.size(); i++) {
 		if(!attributes[i].name.compare(attributeName)){
 			ret=attributes[i].value;
@@ -144,7 +144,8 @@ void ofXML::loadFile(string file)
 	while (input.peek()!=EOF) {
 		getline(input, buffer);
 		for (unsigned int i=0; i<buffer.length(); i++) {
-			if(!tagOpen&&buffer[i]=='<'){
+      if(buffer[0]=='#') i=buffer.length();
+			else if(!tagOpen&&buffer[i]=='<'){
 				tagOpen=true;
 				i++;
 				try {
@@ -257,7 +258,7 @@ void ofXML::removeAttribute(string label)
 
 string ofXML::getAttribute(string name)
 {
-	string ret;
+	string ret="";
 	if(currentLevel)
 		ret=currentLevel->getAttribute(name);
 	return ret;

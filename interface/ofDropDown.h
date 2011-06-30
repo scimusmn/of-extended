@@ -73,6 +73,8 @@ public:
 	double getValue();
 	
 	string getString();
+  
+  int getIndex();
 	
 	int getChoiceNumber();
 	

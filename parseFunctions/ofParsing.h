@@ -12,6 +12,8 @@
 
 bool isDelim(char comp, string delims);
 
+double operaterByChar(double a, char op, double b);
+
 string getWord(string buffer,unsigned int & first, string delims);
 
 string peekWord(string buffer,unsigned int first, string delims);

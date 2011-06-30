@@ -66,7 +66,7 @@ void ofButton::draw(int _x, int _y, int _w, int _h)
 {
 	x=_x,y=_y,w=_w,h=_h;
 	if(!bPressed&&bAvailable) ofSetColor(255, 255, 255);
-	else if(!bPressed&&!bAvailable) ofSetColor(255, 255, 255,96);
+	else if(!bPressed&&!bAvailable) ofSetColor(255, 255, 255,128);
 	else ofSetColor(128, 128, 128);
 	ofEnableSmoothing();
 	if(img.length()){
