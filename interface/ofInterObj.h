@@ -23,15 +23,17 @@ protected:
 	double * X, * Y, * W, *H;
 public:
 	string title;
+  ofPoint relPos,relMouse;
 	double x,y,w,h;
 	ofInterObj(){
 		bOver=bPressed=false;
-		x=y=w=h=0;
+		relPos.x=relPos.y=relMouse.x=relMouse.y=x=y=w=h=0;
 	}
 	ofInterObj(double xint, double yint, double wid, double hgt){
 		bOver=bPressed=0;
 		x=xint,y=yint;
 		w=wid, h=hgt;
+    relPos.x=relPos.y=relMouse.x=relMouse.y=0;
 	}
 	void bind(double & num,ofVariableName which){
 		switch (which) {
