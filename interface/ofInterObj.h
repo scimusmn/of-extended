@@ -113,4 +113,26 @@ class ofInterGroup : public ofInterObj {
 		draw(x,y);
 	}
 };
+
+template <class T>
+class ofGroup : public ofInterObj {
+  vector<T> objects;
+  bool bInHand;
+public:
+  T & operator[](int i){
+    return objects[i];
+  }
+  unsigned int size(){
+    return objects.size(); 
+  }
+  bool clickDown(int _x,int _y){}
+	bool clickUp(int _x, int _y){}
+	bool clickUp(){}
+	void drag(int _x, int _y){}
+	void move(int _x, int _y){}
+	void keyboard(char k){}
+	void update(){}
+	void draw(int _x, int _y){}
+};
+
 #endif
