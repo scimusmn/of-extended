@@ -62,7 +62,11 @@ public:
 	
 	void operator=(double c);
 	
-	void rotate(double degrees);
+	ofVector rotate(double degrees);
+  
+  double angleDifference(ofVector b);
+  
+  double absoluteAngle();
 	
 	ofVector operator-();
 	

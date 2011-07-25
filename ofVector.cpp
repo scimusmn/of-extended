@@ -91,13 +91,26 @@ void ofVector::operator*=(double c)
 	z*=c;
 }
 
-void ofVector::rotate(double deg)
+ofVector ofVector::rotate(double deg)
 {
 	deg=M_PI*deg/180.;
 	
 	double xTemp = (x* cos(deg)) - (y * sin(deg));
 	y = (x* sin(deg)) + (y * cos(deg));
 	x=xTemp;
+  return *this;
+}
+
+double ofVector::angleDifference(ofVector b)
+{
+  
+}
+
+double ofVector::absoluteAngle()
+{
+  double ret=180*atan(x/y)/M_PI;
+  if(y>0) ret+=180;
+  return ret;
 }
 
 ofVector ofVector::operator-()
