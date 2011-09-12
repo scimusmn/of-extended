@@ -177,6 +177,22 @@ void ofRaisedCircle(int x, int y, int rad, float perc)
 	}
 	glEnd();
 }
+
+void ofDentCircle(int x, int y, int rad, float perc)
+{
+	ofColor k=ofGetStyle().color;
+	float r=k.r/255.,g=k.g/255.,b=k.b/255.;
+	const int NUM_DIVS = 60;
+	glColor3f(r,g,b);
+	glBegin(GL_TRIANGLE_FAN);
+	glVertex2d(x,y);
+	for ( int i = 0; i < NUM_DIVS+1; ++i ){
+		float perc2 =sin(i*2*M_PI/(NUM_DIVS-1))*perc;
+		glColor3f(r+perc2*r,g+perc2*g,b+perc2*b);
+		glVertex2d(x + rad*cos(i*2*M_PI/(NUM_DIVS-1)),y + rad*sin(i*2*M_PI/(NUM_DIVS-1)));
+	}
+	glEnd();
+}
 	
 void shadeCircleSide(int x, int y, int rad, float r, float g, float b, float perc){
 	int NUM_DIVS=30;
@@ -370,6 +386,78 @@ void ofRoundBox(double x, double y, double w, double h,double rad,double shade)
 		ofSetColor(cur);
 		glVertex2d(x+w-rad,y+h-rad);
 		ofSetColor(cur-shade*255);
+		glVertex2d(x+w,y+h-rad);
+		glEnd();
+		ofSetColor(cur);
+		glBegin(GL_QUADS);
+		glVertex2d(x+w-rad,y+rad);
+		glVertex2d(x+w-rad,y+h-rad);
+		glVertex2d(x+rad,y+h-rad);
+		glVertex2d(x+rad,y+rad);
+		glEnd();
+	}
+	glEnd();
+}
+
+void ofInvertBox(double x, double y, double w, double h,double rad,double shade)
+{
+	bool fill=true;
+	glBegin((fill)?GL_QUAD_STRIP:GL_LINE_LOOP);
+	ofColor cur=ofGetStyle().color;
+	for ( int i = 0; i <= 90; ++i ){
+		if(fill){
+			ofSetColor(cur);
+			glVertex2d(x+w-rad,y+h-rad);
+			ofSetColor(cur+shade*255);
+		}
+		glVertex2d(x+w-rad+rad*cos(i*M_PI/(180)),y+h-rad+rad*sin(i*M_PI/(180)));
+	}
+	if(fill){
+		ofSetColor(cur);
+		glVertex2d(x+rad,y+h-rad);
+		ofSetColor(cur+shade*255);
+		glVertex2d(x+rad,y+h);
+	}
+	for ( int i = 90; i <= 180; ++i ){
+		if(fill){
+			ofSetColor(cur);
+			glVertex2d(x+rad,y+h-rad);
+			ofSetColor(cur+shade*cos(((i-90)*2)*M_PI/(180))*255);
+		}
+		glVertex2d(x+rad+rad*cos(i*M_PI/(180)),y+h-rad+rad*sin(i*M_PI/(180)));
+	}
+	if(fill){
+		ofSetColor(cur);
+		glVertex2d(x+rad,y+rad);
+		ofSetColor(cur-shade*255);
+		glVertex2d(x,y+rad);
+	}
+	for ( int i = 180; i <= 270; ++i ){
+		if(fill){
+			ofSetColor(cur);
+			glVertex2d(x+rad,y+rad);
+			ofSetColor(cur-shade*255);
+		}
+		glVertex2d(x+rad+rad*cos(i*M_PI/(180)),y+rad+rad*sin(i*M_PI/(180)));
+	}
+	if(fill){
+		ofSetColor(cur);
+		glVertex2d(x+w-rad,y+rad);
+		ofSetColor(cur-shade*255);
+		glVertex2d(x+w-rad,y);
+	}
+	for ( int i = 270; i <= 361; ++i ){
+		if(fill){
+			ofSetColor(cur);
+			glVertex2d(x+w-rad,y+rad);
+			ofSetColor(cur+shade*cos((i*2)*M_PI/(180))*255);
+		}
+		glVertex2d(x+w-rad+rad*cos(i*M_PI/(180)),y+rad+rad*sin(i*M_PI/(180)));
+	}
+	if (fill) {
+		ofSetColor(cur);
+		glVertex2d(x+w-rad,y+h-rad);
+		ofSetColor(cur+shade*255);
 		glVertex2d(x+w,y+h-rad);
 		glEnd();
 		ofSetColor(cur);

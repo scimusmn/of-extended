@@ -33,6 +33,8 @@ void shadeBoxSide(double x, double y, double width, double height, float r,float
 void shadeCircle(int x, int y, int rad, float r, float g, float b, float perc=.2,bool overshade=false,int dir=1);
 
 void ofRaisedCircle(int x, int y, int rad, float perc=.2);
+
+void ofDentCircle(int x, int y, int rad, float perc=.2);
 	
 void shadeCircleSide(int x, int y, int rad, float r, float g, float b, float perc=.2);
 	
@@ -43,6 +45,8 @@ void shinyCircleInvert(int x, int y, int rad, float r, float g, float b, float p
 void roundedBox(double x, double y, double width, double height,double rad, float r,float g, float b, float perc=.2);
 
 void ofRoundBox(double x, double y, double width, double height,double rad, double shade=.05);
+
+void ofInvertBox(double x, double y, double width, double height,double rad, double shade=.05);
 
 void ofRoundShape(double x, double y, double width, double height,double rad, bool fill);
 

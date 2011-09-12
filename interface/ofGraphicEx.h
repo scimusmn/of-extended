@@ -10,7 +10,7 @@
 #ifndef _GRAPHIC_EX
 #define _GRAPHIC_EX
 
-#include "ofVector.h"
+#include "ofExtended.h"
 
 bool ofInTriangle(ofPoint A,ofPoint B, ofPoint C, ofPoint P);
 
