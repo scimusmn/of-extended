@@ -69,6 +69,13 @@ bool ofSlider::clickUp()
   bool ret=bPressed;
   knob.clickUp();
   bPressed=false;
+  double divs=3;
+  for (int i=0; i<divs+1; i++) {
+    //cout << knob.relPos.x << " & " <<i*w/divs << endl;
+//    cout << "abs " << abs(knob.relPos.x-i*w/divs) <<" compared to " << w/divs << endl;
+    if(abs(knob.relPos.x-i*w/divs)<w/(2*divs)) knob.relPos.x=i*w/divs;
+  }
+  //cout << endl;
   return ret;
 }
 
