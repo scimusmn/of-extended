@@ -132,6 +132,12 @@ ofDropDown::~ofDropDown(){
 	ddd.clear();
 }
 
+void ofDropDown::setUnopenImage(string fileName)
+{
+  nOpen=fileName;
+  unopened.loadImage(fileName);
+}
+
 int ofDropDown::size(){
 	return values.size();
 }
@@ -193,16 +199,17 @@ void ofDropDown::draw(){
 	string vars;
 	if(values.size()) vars=values[curPos];
 	float sHgt= arial.stringHeight(vars)/2;
-	ofSetColor(0x8f8f8f);
-	ofNoFill();
-	ofEnableSmoothing();
-	ofRoundBox(x-1,y-1,w+2,h+2,h/2+1);
-	ofFill();
-	ofDisableSmoothing();
-	ofSetColor(0xECECEC);
-	ofRoundBox(x,y,w,h,h/2);
+	
 	int textX=x+h/2;
-	if(!open){
+	if(!open&&!nOpen.length()){
+    ofSetColor(0x8f8f8f);
+    ofNoFill();
+    ofEnableSmoothing();
+    ofRoundBox(x-1,y-1,w+2,h+2,h/2+1);
+    ofFill();
+    ofDisableSmoothing();
+    ofSetColor(0xECECEC);
+    ofRoundBox(x,y,w,h,h/2);
 		int triX=x+w-h/2;
 		ofSetColor(0, 0, 0);
 		ofEnableSmoothing();
@@ -217,6 +224,9 @@ void ofDropDown::draw(){
 		glColor3f(0,0,0);
 		arial.drawString(vars, textX,y+h-5);
 	}
+  else if(!open&&nOpen.length()){
+    unopened.draw(x, y);
+  }
 	else{
 		ofSetColor(0xFCFCFC);
 		int yDisp=(curPos>=nDisp&&curPos<nDisp+values.size()%10)?curPos%10:0;
@@ -279,7 +289,11 @@ bool ofDropDown::clickDown(int _x,int _y){
 	bool ret=false;
 	//cout << "here" << endl;
 	int yDisp=(curPos>=nDisp&&curPos<nDisp+values.size()%10)?curPos%10:0;
-	if (over(_x,_y)&&!open) {
+	if (over(_x,_y)&&!open&&!nOpen.length()) {
+		open=ret=true;
+		selected=false;
+	}
+  else if (_x>x&&_x<x+unopened.width&&_y>y&&_y<y+unopened.height&&!open&&nOpen.length()) {
 		open=ret=true;
 		selected=false;
 	}

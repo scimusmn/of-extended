@@ -33,6 +33,7 @@ public:
 	double getElapsedf();
 	long getElapsed();
 	long getRemaining();
+  double getPercent();
 	bool justExpired();
 };
 

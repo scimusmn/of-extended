@@ -43,6 +43,9 @@ void ofTimer::setPercent(double perc)
 
 void ofTimer::reset(){
 	alarm=timeSet;
+  elapsed=0;
+  remaining=originalTime;
+  timeSet=ofGetElapsedTimeMillis();
 	bSet=false;
 }
 
@@ -81,6 +84,11 @@ long ofTimer::getElapsed(){
 long ofTimer::getRemaining(){
 	long curTime=ofGetElapsedTimeMillis();
 	return (alarm>curTime)?alarm-curTime:(bPaused)?remaining:0;
+}
+
+double ofTimer::getPercent()
+{
+  return getElapsedf()/(double(originalTime)/1000.);
 }
 
 bool ofTimer::justExpired(){

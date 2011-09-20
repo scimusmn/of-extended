@@ -15,6 +15,7 @@
 #include "ofInterObj.h"
 #include "xml_smm.h"
 #include "ofXMLParse.h"
+#include "ofImage.h"
 
 #include <vector>
 #include <algorithm>
@@ -31,6 +32,8 @@ public:
 	vector<string> dds;
 	string svar;
 	ofFont arial;
+  ofImage unopened;
+  string nOpen;
 	int steps,nDisp;
 	bool open,selected,bOver,bAutoAdj;
 	double var;
@@ -49,6 +52,8 @@ public:
 	int size();
 	
 	void setup(int _x, int _y,int _w,int _h);
+  
+  void setUnopenImage(string fileName);
 	
 	void setTextSize(int num);
 	
