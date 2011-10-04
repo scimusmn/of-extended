@@ -18,10 +18,11 @@
 #include "extended/interface/ofSpinner.h"
 #include "extended/interface/ofScrollBar.h"
 #include "extended/interface/ofRadioButtons.h"
+#include "extended/interface/ofSlider.h"
 
 //--------------------------
 // vector math
-#include "extended/ofVector.h"
+#include "extended/vector/ofVector.h"
 #include "extended/interface/ofGraphicEx.h"
 
 //--------------------------

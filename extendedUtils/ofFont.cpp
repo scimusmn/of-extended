@@ -8,6 +8,8 @@
  */
 
 #include "ofFont.h"
+#include "ofMain.h"
+#include "../parseFunctions/ofParsing.h"
 
 vector<ofTrueTypeFont> fonts;
 map<int,int> points;
@@ -17,23 +19,43 @@ map<string,map<int,ofTrueTypeFont> > Fonts;
 
 string ssprintf(const char * format, ...)
 {
-	int amount;
 	string temp=format;
-	size_t found;
-	found=temp.find("%");
-	amount++;
-	while (found!=string::npos) {
-		found=temp.find("%",found+1);
-		amount++;
-	}
-	found=0;
-	char tmp[1024];
 	va_list vl;
-	va_start(vl,amount);
-	vsprintf(tmp, format, vl);
+	va_start(vl,format);
+	stringstream sstr;
+	int num=0;
+	for(unsigned int i=0; i<temp.length(); i++){
+		if(temp[i]=='%'){
+			string t=getWord(temp,++i,"idsec%");
+			t+=temp[i];
+			bool padWithZero=false;
+			for(unsigned int j=0; j<t.size(); j++){
+				if(t[j]=='0') sstr<<setfill('0');
+				else if(t[j]>'1'&&t[j]<'9'){
+					if(j>=1&&t[j-1]!='.') sstr << setw(t[j]-'0');
+					if(j>=1&&t[j-1]=='.') sstr << setprecision(t[j]-'0');
+				}
+				if(t[j]=='i'){
+					int arg = va_arg(vl,int);
+					sstr << arg;
+				}
+				if(t[j]=='s'){
+					char * arg = va_arg(vl,char *);
+					sstr << arg;
+				}
+				if(t[j]=='f'){
+					float arg = va_arg(vl,float);
+					sstr << arg;
+				}
+				if(t[j]=='%'){
+					sstr << '%';
+				}
+			}
+		}
+		else sstr << temp[i];
+	}
 	va_end(vl);
-	temp=tmp;
-	return temp;
+	return sstr.str();
 }
 
 void ofFontContainer::setSize(int pt){

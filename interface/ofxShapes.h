@@ -10,6 +10,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofVector.h"
+#include "../vector/ofVector.h"
 
 void ofRegularPolygon(int x, int y, double s, double numSides);

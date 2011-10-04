@@ -105,9 +105,12 @@ void ofTabs::setDefaultTab(int num)
 
 bool ofTabs::clickDown(int _x, int _y)
 {
+	bool ret=0;
 	for (unsigned int i=0; i<tabs.size(); i++) {
 		if (tabs[i].clickDown(_x,_y)) {
+			ret=true;
 			tabOpen=i;
 		}
 	}
+	return ret;
 }

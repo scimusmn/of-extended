@@ -47,6 +47,7 @@ bool ofRadioButtons::clickDown(int _x, int _y)
 			}
 		}
 	}
+	return ret;
 }
 
 bool ofRadioButtons::clickUp()
@@ -54,6 +55,7 @@ bool ofRadioButtons::clickUp()
 	for (unsigned int i=0; i<buttons.size(); i++) {
 		buttons[i].clickUp();
 	}
+	return false;
 }
 
 void ofRadioButtons::draw(double _x, double _y, double spn)

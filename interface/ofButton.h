@@ -31,6 +31,7 @@ public:
 	void setup(int _x, int _y, int _w, int _h,string imageName="", string prsImage="");
 	void setPressImage(string title2);
 	void setup(int _w, int _h,string imageName="", string prsImage="");
+  void setup(int dimension, ofDirection dir,string imageName, string prsImage="");
 	void setup(string title, string font="Arial.ttf",int size=10);
 	void draw(int _x, int _y);
 	void draw(int _x, int _y,int _w, int _h);

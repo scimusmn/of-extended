@@ -53,7 +53,8 @@ void ofTimer::pause(){
 	elapsed=getElapsed();
 	remaining=getRemaining();
 	bPaused=true;
-	reset();
+	//reset();
+  alarm=ofGetElapsedTimeMillis();
 }
 
 void ofTimer::run(){
@@ -66,7 +67,7 @@ void ofTimer::run(){
 }
 
 bool ofTimer::expired(){
-	return alarm<=ofGetElapsedTimeMillis();
+	return (alarm<=ofGetElapsedTimeMillis()&&!bPaused);
 }
 
 bool ofTimer::running(){
@@ -74,11 +75,11 @@ bool ofTimer::running(){
 }
 
 double ofTimer::getElapsedf(){
-	return (!expired())?(elapsed+ofGetElapsedTimeMillis()-timeSet)/1000.:(bPaused)?elapsed/1000.:originalTime/1000.;
+	return double(getElapsed())/1000.;
 }
 
 long ofTimer::getElapsed(){
-	return (!expired())?(ofGetElapsedTimeMillis()-timeSet)+elapsed:(bPaused)?elapsed:originalTime;
+	return (!expired()&&!bPaused)?(ofGetElapsedTimeMillis()-timeSet)+elapsed:(bPaused)?elapsed:originalTime;
 }
 
 long ofTimer::getRemaining(){
@@ -93,7 +94,7 @@ double ofTimer::getPercent()
 
 bool ofTimer::justExpired(){
 	bool ret=false;
-	if(alarm<=ofGetElapsedTimeMillis()&&bSet)
+	if(expired()&&bSet)
 		ret=true, bSet=false;
 	return ret;
 }

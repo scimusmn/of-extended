@@ -11,10 +11,9 @@
 #define _dropdown_
 
 #include "ofGraphics.h"
-#include "ofFont.h"
 #include "ofInterObj.h"
-#include "xml_smm.h"
-#include "ofXMLParse.h"
+//#include "xml_smm.h"
+#include "../fileFunctions/ofXMLParse.h"
 #include "ofImage.h"
 
 #include <vector>
@@ -43,7 +42,7 @@ public:
 	
 	ofDropDown(int _x, int _y,int _w,int _h,int low, int hi, int stps=10);
 	
-	ofDropDown(xmlParse * xml);
+	//ofDropDown(xmlParse * xml);
 	
 	ofDropDown(ofTag xml);
 	

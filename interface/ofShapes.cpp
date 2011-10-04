@@ -924,7 +924,8 @@ void digitDisplay::draw(string k, double _x, double _y)
 	x=_x,y=_y;
 	double dx=0;
 	int offset=0;
-	for (unsigned int i=0; i<k.length(); i++) {
+	//if(numTemp.size()>k.length())
+	for (unsigned int i=0; i<k.length()&&i<numTemp.size(); i++) {
 		if(k[i]>='0'&&k[i]<='9'){
 			numTemp[i-offset].draw(x+dx,y,k[i]-'0');
 			dx+=size*8;

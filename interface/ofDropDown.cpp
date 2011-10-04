@@ -39,7 +39,7 @@ ofDropDown::ofDropDown(int _x, int _y,int _w,int _h,int low, int hi, int stps):o
 	nDisp=0;
 }
 
-ofDropDown::ofDropDown(xmlParse * xml):ofInterObj(){
+/*ofDropDown::ofDropDown(xmlParse * xml):ofInterObj(){
 	curPos=0;
 	arial.loadFont("Arial.ttf");
 	arial.setSize(10);
@@ -78,7 +78,7 @@ ofDropDown::ofDropDown(xmlParse * xml):ofInterObj(){
 		if(!numSteps) numSteps=11;
 		setRange(ddlow, ddhigh, numSteps);
 	}
-}
+}*/
 
 ofDropDown::ofDropDown(ofTag xml):ofInterObj(){
 	curPos=0;

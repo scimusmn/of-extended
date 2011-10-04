@@ -187,7 +187,7 @@ void ofVMouse::updateNextEvent()
 
 ofTag ofVMouse::getRequestEvent()
 {
-  
+  return ofTag();
 }
 
 void ofVMouse::nextEvent(vMouseType eventType, ofInterObj & obj, int _x, int _y, double timeInSeconds)

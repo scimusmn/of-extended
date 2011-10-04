@@ -8,7 +8,7 @@
  */
 
 #include "ofXMLParse.h"
-#include "ofParsing.h"
+#include "../parseFunctions/ofParsing.h"
 
 ofTag::ofTag(string lbl)
 {
@@ -299,7 +299,8 @@ int ofXML::getNumTags(string fullPath, ...)
 	vector<string> tags=ofSplitString(fullPath, ":");
 	int which;
 	va_list vl;
-	va_start(vl,tags.size());
+	int tagSize=tags.size();
+	va_start(vl,tagSize);
 	for (unsigned int i=0; i<tags.size()-1; i++) {
 		which=va_arg(vl,int);
 		found=pushTag(tags[i], which);
@@ -426,7 +427,8 @@ bool ofXML::setCurrentTag(string fullPath, ...)
 	vector<string> tags=ofSplitString(fullPath, ":");
 	int which;
 	va_list vl;
-	va_start(vl,tags.size());
+	int tagSize=tags.size();
+	va_start(vl,tagSize);
 	for (unsigned int i=0; i<tags.size(); i++) {
 		which=va_arg(vl,int);
 		ret=pushTag(tags[i], which);

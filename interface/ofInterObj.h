@@ -11,7 +11,7 @@
 #define _UIObj
 
 #include "ofShapes.h"
-#include "ofFont.h"
+#include "../extendedUtils/ofFont.h"
 
 enum ofVariableName {
 	OF_X_VAR, OF_Y_VAR, OF_W_VAR, OF_H_VAR
@@ -84,9 +84,9 @@ public:
 		bPressed=state;
 	}
 	void registerEvents();
-	virtual bool clickDown(int _x,int _y){}
-	virtual bool clickUp(int _x, int _y){}
-	virtual bool clickUp(){}
+	virtual bool clickDown(int _x,int _y){return false;}
+	virtual bool clickUp(int _x, int _y){return false;}
+	virtual bool clickUp(){return false;}
 	virtual void drag(int _x, int _y){}
 	virtual void motion(int _x, int _y){}
 	virtual void keyboard(char k){}
@@ -101,9 +101,9 @@ public:
 vector<ofInterObj *> & interObjects();
 
 class ofInterGroup : public ofInterObj {
-	virtual bool clickDown(int _x,int _y){}
-	virtual bool clickUp(int _x, int _y){}
-	virtual bool clickUp(){}
+	virtual bool clickDown(int _x,int _y){return false;}
+	virtual bool clickUp(int _x, int _y){return false;}
+	virtual bool clickUp(){return false;}
 	virtual void drag(int _x, int _y){}
 	virtual void move(int _x, int _y){}
 	virtual void keyboard(char k){}
@@ -125,9 +125,9 @@ public:
   unsigned int size(){
     return objects.size(); 
   }
-  bool clickDown(int _x,int _y){}
-	bool clickUp(int _x, int _y){}
-	bool clickUp(){}
+  bool clickDown(int _x,int _y){return false;}
+	bool clickUp(int _x, int _y){return false;}
+	bool clickUp(){return false;}
 	void drag(int _x, int _y){}
 	void move(int _x, int _y){}
 	void keyboard(char k){}

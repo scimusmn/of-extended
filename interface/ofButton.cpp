@@ -20,6 +20,24 @@ void ofButton::setup(int _x, int _y, int _w, int _h, string imageName, string pr
 	background.loadImage(imageName);
 }
 
+void ofButton::setup(int dimension, ofDirection dir,string imageName, string prsImage)
+{
+  background.loadImage(imageName);
+  if(dir==OF_VERT){
+    h=dimension;
+    w=(h/background.height)*background.width;
+  }
+  else {
+    w=dimension;
+    h=(w/background.width)*background.height;
+  }
+
+	bPressed=false;
+	bAvailable=true;
+	img=imageName;
+	img2=prsImage;
+}  
+
 void ofButton::setup(int _w, int _h, string imageName, string prsImage)
 {
 	arial.loadFont("Arial.ttf");
