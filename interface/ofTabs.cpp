@@ -85,10 +85,12 @@ void ofTabs::draw(int _x, int _y)
 	for (unsigned int i=1; i<tabs.size(); i++) {
 		tabs[i].draw(tabs[i-1].x+tabs[i-1].w-tabs[i-1].h*3/4,y);
 	}
-	
-	ofRoundBox(x,y+=tabs[tabOpen].h-1,w,h,20,0);
+	ofFlat();
+	ofRoundedRect(x,y+=tabs[tabOpen].h-1,w,h,20);
 	ofSetColor(0, 0, 0);
-	ofRoundShape(x,y,w,h,20,false);
+  ofNoFill();
+	ofRoundedRect(x,y,w,h,20);
+  ofFill();
 	ofSetColor(cur);
 	tabs[tabOpen].draw();
 }

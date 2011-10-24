@@ -22,17 +22,20 @@ void ofTag::writeOut(ofstream &k, int t)
 	for (unsigned int i=0; i<attributes.size(); i++) {
 		k<< " "+attributes[i].name+"=\""+attributes[i].value+"\"";
 	}
-	k<<">";
-	if(value.length()) k<< value;
-	for (unsigned int i=0; i<subnodes.size(); i++) {
-		k<< "\n";
-		subnodes[i].writeOut(k, t+1);
-	}
-	if(subnodes.size()){
-		k<<endl;
-		for(int i=0; i<t; i++) k<<"\t";
-	}
-	k<<"</"+label+">";
+  if(value.length()||subnodes.size()){
+    k<<">";
+    if(value.length()) k<< value;
+    for (unsigned int i=0; i<subnodes.size(); i++) {
+      k<< "\n";
+      subnodes[i].writeOut(k, t+1);
+    }
+    if(subnodes.size()){
+      k<<endl;
+      for(int i=0; i<t; i++) k<<"\t";
+    }
+    k<<"</"+label+">";
+  }
+  else k<<"/>";
 }
 
 /*void ofTag::writeOut(ofstream &k, int t)

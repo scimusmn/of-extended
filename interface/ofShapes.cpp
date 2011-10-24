@@ -9,7 +9,7 @@
 
 #include "ofShapes.h"
 
-void drawBox(double x, double y, double width, double height, float r, float g, float b, float a)
+/*void drawBox(double x, double y, double width, double height, float r, float g, float b, float a)
 {
 	glColor4f(r,g,b,a);
   	glBegin(GL_POLYGON);
@@ -844,15 +844,17 @@ void ofRingSegment(double x, double y, double ir, double oR, double startDeg, do
 		glVertex2d(x+oR*cos(i*M_PI/(180)),y+oR*sin(i*M_PI/(180)));
 	}
 	glEnd();
-}
+}*/
 
 numberBar::numberBar(double size){
 	w=size,h=4.*size;
 }
 void numberBar::draw(double x_, double y_, bool vert){
 	x=x_, y=y_;
-	if(vert) ofRoundBox(x, y, w, h, w/2, .1);
-	else ofRoundBox(x,y, h, w, w/2, .1);
+  ofRaised(.1);
+	if(vert) ofRoundedRect(x, y, w, h, w/2);
+	else ofRoundedRect(x,y, h, w, w/2);
+  ofFlat();
 }
 
 numberTemplate::numberTemplate(double size){

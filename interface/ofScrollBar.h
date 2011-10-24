@@ -45,4 +45,5 @@ public:
 	bool available();
 	double barSize();
 	double getFullSize(){ return fullSize;}
+  void setPressed(bool state);
 };

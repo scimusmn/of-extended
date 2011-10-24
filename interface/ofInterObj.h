@@ -11,6 +11,7 @@
 #define _UIObj
 
 #include "ofShapes.h"
+#include "ofNewShapes.h"
 #include "../extendedUtils/ofFont.h"
 
 enum ofVariableName {
@@ -80,7 +81,7 @@ public:
 	void resize(double prctw,double prcth){
 		w*=prctw, h*=prcth;
 	}
-	void setPressed(bool state){
+	virtual void setPressed(bool state){
 		bPressed=state;
 	}
 	void registerEvents();

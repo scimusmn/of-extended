@@ -41,13 +41,17 @@ void ofSlider::draw(int _x, int _y)
   x=_x, y=_y;
   knob.x=x-knob.w/2;
   knob.y=y-(knob.h-h)/2;
-  ofInvertBox(x, y, w, h, h/4, .2);
-  ofCircleShadow(knob.x+knob.relPos.x+knob.w/2, knob.y+knob.h/2, knob.w/2+5, .8);
+  ofRaised(-.2);
+  ofRoundedRect(x, y, w, h, h/4);
+  ofRaised(.2);
+  ofSetShadowDarkness(.2);
+  ofShadowCircle(knob.x+knob.relPos.x+knob.w/2+2, knob.y+knob.h/2+2, knob.w/2,1);
   ofSetColor(200, 200, 200);
-  ofRaisedCircle(knob.x+knob.relPos.x+knob.w/2, knob.y+knob.h/2, knob.w/2, .2);
+  ofCircle_Plus(knob.x+knob.relPos.x+knob.w/2, knob.y+knob.h/2, knob.w/2);
   if(knob.pressed()) ofSetColor(0, 64, 200);
   else ofSetColor(128,128,128);
-  ofDentCircle(knob.x+knob.relPos.x+knob.w/2, knob.y+knob.h/2, knob.w/3, .2);
+  ofRaised(-.2);
+  ofCircle_Plus(knob.x+knob.relPos.x+knob.w/2, knob.y+knob.h/2, knob.w/3);
 }
 
 bool ofSlider::clickDown(int _x, int _y)

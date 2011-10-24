@@ -5,12 +5,11 @@
 #include<math.h>
 #include<vector>
 #include "ofGraphics.h"
+#include "ofNewShapes.h"
 
 using namespace std;
 
-enum ofDirection {
-	OF_UP,OF_DOWN,OF_LEFT,OF_RIGHT,OF_VERT,OF_HOR
-};
+/*extern float drawMode;
 
 void drawBox(double x, double y, double width, double height, float r=1, float g=1, float b=1, float a=1);
 
@@ -84,7 +83,7 @@ void ofRoundShadow(double x, double y, double w, double h,double rad,double strt
 
 void ofRing(double x, double y, double ir, double Or);
 
-void ofRingSegment(double x, double y, double ir, double Or,double start, double finish);
+void ofRingSegment(double x, double y, double ir, double Or,double start, double finish);*/
 
 class numberBar {
 public:

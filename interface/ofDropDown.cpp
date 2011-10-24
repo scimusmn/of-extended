@@ -39,47 +39,6 @@ ofDropDown::ofDropDown(int _x, int _y,int _w,int _h,int low, int hi, int stps):o
 	nDisp=0;
 }
 
-/*ofDropDown::ofDropDown(xmlParse * xml):ofInterObj(){
-	curPos=0;
-	arial.loadFont("Arial.ttf");
-	arial.setSize(10);
-	open=selected=bOver=false;
-	deci=false;
-	nDisp=0;
-	cursorPos=-1;
-	int ddhigh=0;
-	int ddlow=0;
-	int numSteps=0;
-	map<string,int> list;
-	list["ddhigh"]=0;
-	list["ddlow"]=1;
-	list["dds"]=2;
-	list["ddsteps"]=3;
-	for(int i=0;i<xml->size();i++){
-		string * node=xml->getSubnode(i);
-		switch (list.find(node[0])->second) {
-			case 0:
-				ddhigh=atoi(node[1].c_str());
-				break;
-			case 1:
-				ddlow=atoi(node[1].c_str());
-				break;
-			case 2:
-				setValue(node[1]);
-				break;
-			case 3:
-				numSteps=atoi(node[1].c_str());
-				break;
-			default:
-				break;
-		}
-	}
-	if (ddhigh||ddlow) {
-		if(!numSteps) numSteps=11;
-		setRange(ddlow, ddhigh, numSteps);
-	}
-}*/
-
 ofDropDown::ofDropDown(ofTag xml):ofInterObj(){
 	curPos=0;
 	arial.loadFont("Arial.ttf");
@@ -180,6 +139,7 @@ void ofDropDown::adjustSizeToStrings()
 		tempWid=max(tempWid, arial.stringWidth(values[i]));
 		tempHgt=max(tempHgt, arial.stringHeight(values[i]));
 	}
+  if(values.size()>10) tempWid=max(tempWid, arial.stringWidth("previous page"));
 	h=tempHgt+4;
 	w=tempWid+7+h;
 }
@@ -205,11 +165,11 @@ void ofDropDown::draw(){
     ofSetColor(0x8f8f8f);
     ofNoFill();
     ofEnableSmoothing();
-    ofRoundBox(x-1,y-1,w+2,h+2,h/2+1);
+    ofRoundedRect(x-1,y-1,w+2,h+2,h/2+1);
     ofFill();
     ofDisableSmoothing();
     ofSetColor(0xECECEC);
-    ofRoundBox(x,y,w,h,h/2);
+    ofRoundedRect(x,y,w,h,h/2);
 		int triX=x+w-h/2;
 		ofSetColor(0, 0, 0);
 		ofEnableSmoothing();
@@ -235,7 +195,7 @@ void ofDropDown::draw(){
 		if(bOver=(steps>11)){
 			steps=min(steps-nDisp, 10);
 		}
-		ofRoundBox(x+h/2,y-5-yDisp*h,w-h,h*((bOver)?steps+2:steps)+10,5);
+		ofRoundedRect(x+h/2,y-5-yDisp*h,w-h,h*((bOver)?steps+2:steps)+10,5);
 		glColor3f(0,0,0);
 		//arial.drawString(vars, x,y+h-5);
 		for (int i=0; i<steps; i++) {
@@ -249,7 +209,7 @@ void ofDropDown::draw(){
 		}
 		if(bOver){
 			ofSetLineWidth(1);
-			ofLine(x+2, y+(steps-yDisp)*h, x+w-2, y+(steps-yDisp)*h);
+			ofLine(x+h/2+2, y+(steps-yDisp)*h, x+w-h-2, y+(steps-yDisp)*h);
 			if(nDisp>0) ofSetColor(0, 0, 0);
 			else ofSetColor(128,128,128);
 			arial.drawString("previous page",textX,y+(steps+1-yDisp)*h-5);
@@ -266,11 +226,11 @@ void ofDropDown::drawShape(){
 		ofSetColor(0x8f8f8f);
 		ofNoFill();
 		ofEnableSmoothing();
-		ofRoundBox(x-h/2-1,y-1,w+h+2,h+2,h/2+1);
+		ofRoundedRect(x-h/2-1,y-1,w+h+2,h+2,h/2+1);
 		ofFill();
 		ofDisableSmoothing();
 		ofSetColor(0xECECEC);
-		ofRoundBox(x-h/2,y,w+h,h,h/2);
+		ofRoundedRect(x-h/2,y,w+h,h,h/2);
 		ofSetColor(0, 0, 0);
 		ofEnableSmoothing();
 		ofNoFill();
@@ -315,7 +275,7 @@ bool ofDropDown::clickDown(int _x,int _y){
 		if(values.size()>10&&_y>y+h*(steps-yDisp)&&_y<y+h*(steps+1-yDisp)&&nDisp>=10){
 			nDisp-=10;
 		}
-		else if(values.size()>10&&_y>y+h*(steps+1-yDisp)&&_y<y+h*(steps+2-yDisp)&&nDisp<=values.size()-values.size()%10-10){
+		else if(values.size()>10&&_y>y+h*(steps+1-yDisp)&&_y<y+h*(steps+2-yDisp)&&nDisp<values.size()-10){
 			nDisp+=10;
 		}
 	}

@@ -44,7 +44,7 @@ string ssprintf(const char * format, ...)
 					sstr << arg;
 				}
 				if(t[j]=='f'){
-					float arg = va_arg(vl,float);
+					double arg = va_arg(vl,double);
 					sstr << arg;
 				}
 				if(t[j]=='%'){
@@ -179,6 +179,8 @@ ofRectangle ofFont::getBoundingBox(string s, int x, int y)
 {
 	if(FONT_MODE==OF_FONT_CENTER) x=(x-stringWidth(s)/2);
 	else if(FONT_MODE==OF_FONT_RIGHT) x=(x-stringWidth(s));
+  if(V_FONT_MODE==OF_FONT_MID) y=(y+stringHeight("Kj")/2);
+	else if(V_FONT_MODE==OF_FONT_TOP) y=(y+stringHeight("K"));
 	return fonts[setNum].getStringBoundingBox(s,x,y);
 }
 

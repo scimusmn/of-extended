@@ -32,10 +32,12 @@ void ofScrollTab::draw(int dp)
 void ofScrollTab::draw()
 {
 	double r=(vert)?w/2:h/2;
-	ofColor k(60, 170, 220);
+	ofColor k=ofGetStyle().color;
 	ofSetColor((getAvailable())?k:k+.4*255);
-	ofRoundBox(x, y, w, h, r, .3);
-	ofSetColor(0, 0, 0,16);
+  ofRaised(.3);
+	ofRoundedRect(x, y, w, h, r);
+  ofFlat();
+	ofSetColor(0, 0, 0,16*k.a/255.);
 	ofSetLineWidth(1);
 	if(vert) for(int i=1; i<(h-w)/4; i++){
 		ofLine(x+2, y+w/2+i*4, x+w-2, y+w/2+i*4);
@@ -89,19 +91,22 @@ bool ofScrollBar::clickDown(int _x, int _y)
 bool ofScrollBar::clickUp()
 {
 	bool ret=false;
+  bPressed=false;
 	if(ret=tab.pressed()) tab.clickUp();
 	return ret;
 }
 
 void ofScrollBar::draw(int _x, int _y)
 {
+  ofColor k=ofGetStyle().color;
 	x=_x, y=_y;
 	double r=(vert)?w/2.:h/2.;
 	double off=(vert)?(h-fullEx)/2.:(w-fullEx)/2.;
-	ofSetColor(210, 210, 210);
+	ofSetColor(210, 210, 210, k.a);
 	ofRect(x, y, (vert)?w+2:w, (vert)?h:h+2);
-	ofSetColor(150, 150, 150);
-	ofRoundShape((vert)?x+1:x+off, (vert)?y+off:y+1, (vert)?w:fullEx, (!vert)?h:fullEx, r,true);
+	ofSetColor(150, 150, 150, k.a);
+	ofRoundedRect((vert)?x+1:x+off, (vert)?y+off:y+1, (vert)?w:fullEx, (!vert)?h:fullEx, r);
+  ofSetColor(60, 170, 220,k.a);
 	tab.draw((vert)?x+2:y+2);
 }
 
@@ -146,13 +151,13 @@ bool ofScrollBar::setScrollPosition(double newPos)
 		ret=true;
 		if(vert){
 			double pos=newPos*(fullEx-tab.h)/(fullSize-viewSize)+exDisp;
-			if(pos<exDisp+1) pos=exDisp+1;
-			else if(pos+tab.h>h-exDisp*2-2) pos=h-exDisp*2-2-tab.h;
+			if(pos<exDisp) pos=exDisp;
+			else if(pos+tab.h>h-exDisp*2) pos=h-exDisp*2-tab.h;
 			tab.y=pos+y;
 		}
 		else {
 			double pos=newPos*(fullEx-tab.w)/(fullSize-viewSize)+exDisp;
-			if(pos<exDisp+1) pos=exDisp;
+			if(pos<exDisp) pos=exDisp;
 			else if(pos+tab.w>w-exDisp*2-2) pos=w-exDisp*2-2-tab.w;
 			tab.x=pos+x;
 		}
@@ -192,4 +197,10 @@ double ofScrollBar::barSize()
 	if(vert) ret=tab.h;
 	else ret=tab.w;
 	return ret;
+}
+
+void ofScrollBar::setPressed(bool state)
+{
+  bPressed=state;
+  tab.setPressed(state);
 }

@@ -82,13 +82,14 @@ void ofButton::setPressed(bool t)
 
 void ofButton::draw(int _x, int _y, int _w, int _h)
 {
-	x=_x,y=_y,w=_w,h=_h;
+  x=_x,y=_y,w=_w,h=_h;
+  if(_h<=0) y=_y+_h, h=-_h; 
 	if(!bPressed&&bAvailable) ofSetColor(255, 255, 255);
 	else if(!bPressed&&!bAvailable) ofSetColor(255, 255, 255,128);
 	else ofSetColor(128, 128, 128);
 	ofEnableSmoothing();
 	if(img.length()){
-		if((!img2.length())||!bPressed) background.draw(x, y,_w,_h);
+		if((!img2.length())||!bPressed) background.draw(x, _y,_w,_h);
 		if(img2.length()&&bPressed) pressImage.draw(x, y,w,h);
 	}
 	else {
@@ -96,7 +97,9 @@ void ofButton::draw(int _x, int _y, int _w, int _h)
 		ofRectangle box=arial.getBoundingBox(title, x, y);
 		w=box.width+30;
 		h=box.height+10;
-		ofRoundBox(x, y, _w, _h, _h/2, .3);
+    ofRaised(.3);
+		ofRoundedRect(x, y, _w, _h, _h/2);
+    ofFlat();
 		ofSetColor(0,0,0);
 		arial.drawString(title, box.x+15, y+arial.stringHeight(title));
 	}
@@ -115,7 +118,9 @@ void ofButton::drawTextButton(int _x, int _y){
 		ofRectangle box=arial.getBoundingBox(title, x, y);
 		w=box.width+30;
 		h=box.height+10;
-		ofRoundBox(x, y, w, h, h/2, .3);
+    ofRaised(.3);
+		ofRoundedRect(x, y, w, h, h/2);
+    ofFlat();
 		ofSetColor(0,0,0);
 		arial.drawString(title, box.x+15, y+arial.stringHeight(title));
 	}

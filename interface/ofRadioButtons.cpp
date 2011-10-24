@@ -12,15 +12,17 @@
 void radioButton::draw(double _x, double _y)
 {
 	x=_x, y=_y;
-	ofCircleShadow(x+r, y+r, r+7, .5);
+	ofShadowCircle(x+r, y+r, r+7);
 	if(!bPressed&&bAvailable) ofSetColor(255, 255, 255);
 	else if(!bPressed&&!bAvailable) ofSetColor(255, 255, 255,96);
 	else ofSetColor(128, 128, 128);
-	ofRaisedCircle(x+r, y+r, r, .2);
+  ofRaised(.3);
+	ofCircle_Plus(x+r, y+r, r);
 	if(bSelected){
 		ofSetColor(32, 96, 192);
-		ofRaisedCircle(x+r, y+r, r*.75, .2);
+		ofCircle_Plus(x+r, y+r, r*.75);
 	}
+  ofFlat();
 }
 
 void ofRadioButtons::setup(int num, double rad, ofDirection v, double spn)
