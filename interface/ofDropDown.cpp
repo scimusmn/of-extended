@@ -247,7 +247,6 @@ void ofDropDown::drawShape(){
 
 bool ofDropDown::clickDown(int _x,int _y){
 	bool ret=false;
-	//cout << "here" << endl;
 	int yDisp=(curPos>=nDisp&&curPos<nDisp+values.size()%10)?curPos%10:0;
 	if (over(_x,_y)&&!open&&!nOpen.length()) {
 		open=ret=true;

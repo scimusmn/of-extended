@@ -79,9 +79,8 @@ bool ofScrollBar::clickDown(int _x, int _y)
 {
 	bool ret=false;
 	if(tab.clickDown(_x, _y)){
-		cout << "test made it to here" << endl;
-		xDisp=_x-tab.x;
-		yDisp=_y-tab.y;
+    relMouse.x=_x-tab.x;
+		relMouse.y=_y-tab.y;
 	}
 	else if(over(_x, _y))
 		tab.setPressed(true);
@@ -115,14 +114,14 @@ bool ofScrollBar::mouseMotion(int _x, int _y)
 	bool ret=false;
 	if(ret=tab.pressed()){
 		if (!vert) {
-			if(_x-xDisp<x+exDisp+1) tab.x=x+exDisp+1;
-			else if(_x+tab.w-xDisp>x+w-exDisp-1) tab.x=x+w-exDisp-tab.w-1;
-			else tab.x=_x-xDisp;
+			if(_x-relMouse.x<x+exDisp+1) tab.x=x+exDisp+1;
+			else if(_x+tab.w-relMouse.x>x+w-exDisp-1) tab.x=x+w-exDisp-tab.w-1;
+			else tab.x=_x-relMouse.x;
 		}
 		else {
-			if(_y-yDisp<y+exDisp+1) tab.y=y+exDisp+1;
-			else if(_y+tab.h-yDisp>y+h-exDisp-1) tab.y=y+h-exDisp-tab.h-1;
-			else tab.y=_y-yDisp;
+			if(_y-relMouse.y<y+exDisp+1) tab.y=y+exDisp+1;
+			else if(_y+tab.h-relMouse.y>y+h-exDisp-1) tab.y=y+h-exDisp-tab.h-1;
+			else tab.y=_y-relMouse.y;
 		}
 	}
 	return ret;
@@ -147,7 +146,7 @@ double ofScrollBar::getScrollPosition()
 bool ofScrollBar::setScrollPosition(double newPos)
 {
 	bool ret=false;
-	if(newPos<fullSize&&newPos>=0){
+	if(1){
 		ret=true;
 		if(vert){
 			double pos=newPos*(fullEx-tab.h)/(fullSize-viewSize)+exDisp;
@@ -157,7 +156,7 @@ bool ofScrollBar::setScrollPosition(double newPos)
 		}
 		else {
 			double pos=newPos*(fullEx-tab.w)/(fullSize-viewSize)+exDisp;
-			if(pos<exDisp) pos=exDisp;
+			if(pos<exDisp+1) pos=exDisp+1;
 			else if(pos+tab.w>w-exDisp*2-2) pos=w-exDisp*2-2-tab.w;
 			tab.x=pos+x;
 		}
@@ -176,11 +175,11 @@ void ofScrollBar::update()
 {
 	if(!vert){
 		if(tab.x<x+exDisp+1) tab.x=x+exDisp+1;
-		else if(tab.x+tab.w>x+w-exDisp-1) tab.x=x+w-exDisp-tab.w-1;
+		else if(tab.x+tab.w>x+w-exDisp-1) tab.x=x+w-exDisp*2-tab.w-1;
 	}
 	else {
 		if(tab.y<y+exDisp+1) tab.y=y+exDisp+1;
-		else if(tab.y+tab.h>y+h-exDisp-1) tab.y=y+h-exDisp-tab.h-1;
+		else if(tab.y+tab.h>y+h-exDisp-1) tab.y=y+h-exDisp*2-tab.h-1;
 	}
 
 	tab.setAvailable((fullSize/viewSize)>1);

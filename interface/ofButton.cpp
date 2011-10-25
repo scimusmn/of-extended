@@ -97,7 +97,7 @@ void ofButton::draw(int _x, int _y, int _w, int _h)
 		ofRectangle box=arial.getBoundingBox(title, x, y);
 		w=box.width+30;
 		h=box.height+10;
-    ofRaised(.3);
+    ofRaised(.5);
 		ofRoundedRect(x, y, _w, _h, _h/2);
     ofFlat();
 		ofSetColor(0,0,0);
