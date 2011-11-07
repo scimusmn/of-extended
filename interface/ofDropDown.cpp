@@ -18,7 +18,7 @@ const char *asString(double i)
 
 ofDropDown::ofDropDown():ofInterObj(){
 	curPos=0;
-	arial.loadFont("Arial.ttf");
+	arial.loadFont("fonts/Arial.ttf");
 	open=selected=bOver=false;
 	deci=false;
 	var=0;
@@ -29,7 +29,7 @@ ofDropDown::ofDropDown():ofInterObj(){
 }
 
 ofDropDown::ofDropDown(int _x, int _y,int _w,int _h,int low, int hi, int stps):ofInterObj(_x,_y,_w,_h){
-	arial.loadFont("Arial.ttf");
+	arial.loadFont("fonts/Arial.ttf");
 	arial.setSize(10);
 	steps=stps;
 	var=0;
@@ -41,7 +41,7 @@ ofDropDown::ofDropDown(int _x, int _y,int _w,int _h,int low, int hi, int stps):o
 
 ofDropDown::ofDropDown(ofTag xml):ofInterObj(){
 	curPos=0;
-	arial.loadFont("Arial.ttf");
+	arial.loadFont("fonts/Arial.ttf");
 	arial.setSize(10);
 	open=selected=bOver=false;
 	deci=false;
@@ -87,8 +87,7 @@ ofDropDown::ofDropDown(ofTag xml):ofInterObj(){
 }
 
 ofDropDown::~ofDropDown(){
-	dds.clear();
-	ddd.clear();
+	values.clear();
 }
 
 void ofDropDown::setUnopenImage(string fileName)
@@ -103,7 +102,7 @@ int ofDropDown::size(){
 
 void ofDropDown::setup(int _x, int _y,int _w,int _h){
 	nDisp=0;
-	arial.loadFont("Arial.ttf");
+	arial.loadFont("fonts/Arial.ttf");
 	arial.setSize(10);
 	cSetup(_x, _y, _w, _h);
 }
@@ -139,7 +138,7 @@ void ofDropDown::adjustSizeToStrings()
 		tempWid=max(tempWid, arial.stringWidth(values[i]));
 		tempHgt=max(tempHgt, arial.stringHeight(values[i]));
 	}
-  if(values.size()>10) tempWid=max(tempWid, arial.stringWidth("previous page"));
+  if(values.size()>11) tempWid=max(tempWid, arial.stringWidth("previous page"));
 	h=tempHgt+4;
 	w=tempWid+7+h;
 }
@@ -162,14 +161,12 @@ void ofDropDown::draw(){
 	
 	int textX=x+h/2;
 	if(!open&&!nOpen.length()){
+    ofSetColor(0xfdfdfd);
+    ofRoundedRect(x,y,w,h,h/4);
     ofSetColor(0x8f8f8f);
     ofNoFill();
-    ofEnableSmoothing();
-    ofRoundedRect(x-1,y-1,w+2,h+2,h/2+1);
+    ofRoundedRect(x,y,w,h,h/4);
     ofFill();
-    ofDisableSmoothing();
-    ofSetColor(0xECECEC);
-    ofRoundedRect(x,y,w,h,h/2);
 		int triX=x+w-h/2;
 		ofSetColor(0, 0, 0);
 		ofEnableSmoothing();
@@ -313,12 +310,11 @@ void ofDropDown::operator=(const ofDropDown & t)
 	y=t.y;
 	w=t.w;
 	h=t.h;
-	arial.loadFont("Arial.ttf");
+  relPos=t.relPos;
+	arial.loadFont("fonts/Arial.ttf");
 	arial.setSize((t.arial.point));
 	bool deci;
 	values=t.values;
-	ddd=t.ddd;
-	dds=t.dds;
 	selected=t.selected;
 	svar=t.svar;
 	steps=t.steps;

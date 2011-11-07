@@ -142,10 +142,10 @@ void ofRoundedRect(double x, double y, double w, double h,double rad){
     //ofRect(x+rad, y+rad, w-rad*2, h-rad*2);
     glBegin(GL_QUADS);
     {
-      glVertex2d(x+rad-.5, y+rad-.5);
-      glVertex2d(x+w+.5-rad,y+rad-.5);
-      glVertex2d(x+w+.5-rad,y+h-rad+.5);
-      glVertex2d(x+rad-.5,y+h-rad+.5);
+      glVertex2d(x+rad, y+rad);
+      glVertex2d(x+w-rad,y+rad);
+      glVertex2d(x+w-rad,y+h-rad);
+      glVertex2d(x+rad,y+h-rad);
       glEnd();
     }
   }
@@ -207,7 +207,8 @@ void ofShadowCircle(double x, double y, double rad, double depth)
 void shadowCornerDraw(int x, int y, int rad, int start){
   for ( int i = start; i <= start+90; i+=9 ){
     glColor4f(0,0,0,shDk);
-    glVertex2d(x,y);
+    //curveVertex(x, y, rad, i);
+    glVertex2d(x, y);
     glColor4f(0,0,0,0);
     curveVertex(x, y, rad, i);
 	}
@@ -239,6 +240,27 @@ void ofShadowRounded(double x, double y, double w, double h,double rad, double d
 	glEnd();
   glColor4f(0,0,0,shDk);
   ofRect(x+rad, y+rad, w-rad*2, h-rad*2);
+  
+  /*//------- lower right corner
+  shadowCornerDraw(x+w-rad, y+h-rad, rad, rad+depth, 0);
+  
+  //------- lower left corner
+  shadowCornerDraw(x+rad, y+h-rad, rad, rad+depth, 90);
+	
+  //------- upper left corner
+	shadowCornerDraw(x+rad, y+rad, rad, rad+depth, 180);
+  
+  //------- upper right draw
+	shadowCornerDraw(x+w-rad, y+rad, rad, rad+depth, 270);
+  
+  glColor4f(0,0,0,shDk);
+  glVertex2d(x+w,y+h-rad);
+  glColor4f(0,0,0,0);
+  glVertex2d(x+w-rad+depth,y+h-rad);
+  glEnd();
+  
+  ofSetColor(0,0,0,shDk*255);
+  ofRoundedRect(x, y, w, h,rad);*/
 }
 
 void ofRing(double x, double y, double ir, double oR){

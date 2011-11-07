@@ -27,8 +27,6 @@ class ofDropDown: public ofInterObj {
 public:
 	bool deci;
 	int curPos;
-	vector<double> ddd;
-	vector<string> dds;
 	string svar;
 	ofFont arial;
   ofImage unopened;

@@ -128,7 +128,7 @@ ofFont::ofFont()
 }
 
 void ofFont::setMode(ofFontMode mode){
-	if(mode<4) FONT_MODE=mode;
+	if(mode<3) FONT_MODE=mode;
 	else V_FONT_MODE=mode;
 }
 
