@@ -64,7 +64,7 @@ public:
 	
 	void draw();
 	
-	void draw(double _x, double _y);
+	virtual void draw(double _x, double _y);
 	
 	void drawShape();
 	

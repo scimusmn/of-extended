@@ -258,7 +258,6 @@ bool ofDropDown::clickDown(int _x,int _y){
 		for (int i=0; i<steps; i++) {
 			if(_y>y-h*yDisp&&_y<y+h*(steps-yDisp)){
 				if(_y>y+h*(i-yDisp)&&_y<y+h*(i+1-yDisp)){
-					cout << "and here" <<endl;
 					curPos=i+nDisp;
 					selected=true;
 				}
@@ -300,7 +299,6 @@ void ofDropDown::motion(int _x, int _y)
 	else newPos=-1;
 	if (newPos!=cursorPos) {
 		cursorPos=newPos;
-		cout << cursorPos <<endl;
 	}
 }
 	

@@ -34,6 +34,7 @@ public:
 		pos=0;
 	}
 	ofTag(string lbl);
+  void operator=(const ofTag & t);
 	void writeOut(ofstream &k, int t);
 	int getNumAttributes();
 	xmlAttribute getAttribute(int num){return attributes[num];}
@@ -48,6 +49,7 @@ public:
 	string getLabel();
 	void addAttribute(string name,string val);
 	int addNode(string lbl);
+  int addNode(ofTag t);
 	ofTag & getNode(string lbl, int which=0);
 	ofTag & getNode(int which);
 	void setValue(string val);
@@ -55,6 +57,8 @@ public:
 	double getValuef(string lbl, int which=0);
 	friend class ofXML;
 	int getNumTags(string label);
+  int removeNode(string label, int which=0);
+  void removeAttribute(string name);
 };
 
 class ofXML {

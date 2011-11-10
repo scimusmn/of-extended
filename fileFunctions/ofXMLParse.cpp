@@ -15,6 +15,15 @@ ofTag::ofTag(string lbl)
 	label=lbl;
 }
 
+void ofTag::operator=(const ofTag & t)
+{
+  subnodes.assign(t.subnodes.begin(),t.subnodes.end());
+	attributes.assign(t.attributes.begin(),t.attributes.end());
+	label=t.label;
+	value=t.value;
+	pos=t.pos;
+}
+
 void ofTag::writeOut(ofstream &k, int t)
 {
 	for(int i=0; i<t; i++) k<<"\t";
@@ -101,6 +110,44 @@ int ofTag::addNode(string lbl)
 	return ret;
 }
 
+int ofTag::addNode(ofTag t)
+{
+	int ret=0;
+	subnodes.push_back(t);
+	for (unsigned int i=0; i<subnodes.size(); i++) {
+		if(!subnodes[i].label.compare(t.getLabel()))
+			ret++;
+	}
+	return ret;
+}
+
+int ofTag::removeNode(string lbl, int which)
+{
+  if(getNumTags(lbl)>which){
+    int cnt=0;
+    for (unsigned int i=0; i<subnodes.size(); i++) {
+      if(subnodes[i].label==lbl){
+        if(cnt==which){
+          subnodes.erase(subnodes.begin()+i);
+          break;
+        }
+        cnt++;
+      }
+    }
+  }
+  return getNumTags(lbl);
+}
+
+void ofTag::removeAttribute(string nm)
+{
+  for (unsigned int i=0; i<attributes.size(); i++) {
+    if(!attributes[i].name.compare(nm)){
+      subnodes.erase(subnodes.begin()+i);
+      break;
+    }
+  }
+}
+
 ofTag & ofTag::getNode(string lbl, int which)
 {
 	ofTag * node;
@@ -125,11 +172,11 @@ void ofTag::setValue(string val)
 	value=val;
 }
 
-int ofTag::getNumTags(string label)
+int ofTag::getNumTags(string lbl)
 {
 	int ret=0;
 	for (int i=0; i<subnodes.size(); i++) {
-		if(!subnodes[i].label.compare(label))
+		if(!subnodes[i].label.compare(lbl))
 			ret++;
 	}		
 	return ret;

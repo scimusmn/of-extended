@@ -38,7 +38,7 @@ public:
 	double getScrollPosition();
 	bool clickDown(int _x, int _y);
 	bool clickUp();
-	void draw(int _x, int _y);
+	virtual void draw(int _x, int _y);
 	bool mouseMotion(int _x, int _y);
 	void update(double percent);
 	void update();

@@ -33,8 +33,8 @@ public:
 	void setup(int _w, int _h,string imageName="", string prsImage="");
   void setup(int dimension, ofDirection dir,string imageName, string prsImage="");
 	void setup(string title, string font="Arial.ttf",int size=10);
-	void draw(int _x, int _y);
-	void draw(int _x, int _y,int _w, int _h);
+	virtual void draw(int _x, int _y);
+	virtual void draw(int _x, int _y,int _w, int _h);
 	void drawTextButton(int _x, int _y);
 	bool clickDown(double _x, double _y);
 	bool toggle(double _x, double _y);

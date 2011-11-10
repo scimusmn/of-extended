@@ -18,6 +18,8 @@ enum vMouseType {
 	OF_VMOUSE_CLICK_DOWN, OF_VMOUSE_MOVE_TO, OF_VMOUSE_CLICK_UP, OF_VMOUSE_END, OF_VMOUSE_BLANK 
 };
 
+class ofAnimation;
+
 class ofVMouseEvent{
 protected:
 public:
@@ -45,12 +47,13 @@ protected:
 	unsigned long startTime,elapsedAtPause;
 	bool running;
 	ofBaseApp * appPtr;
+  ofAnimation * animHolder;
 	int x0, y0;
 public:
 	int x, y;
 	ofVMouse();
 	~ofVMouse();
-	void setup();
+	void setup(ofAnimation * anim);
 	void addEvent(vMouseType eventType, int _x, int _y, double time);
 	void addEvent(vMouseType eventType, ofInterObj & k, double time);
 	void addEvent(vMouseType eventType, ofInterObj & k, int xInc, int yInc, double time);
@@ -65,4 +68,14 @@ public:
   ofTag getRequestEvent();
   void nextEvent(vMouseType eventType, ofInterObj & k, int xInc, int yInc, double time);
   void nextEvent(vMouseType eventType, int xInc, int yInc, double time);
+};
+
+class ofAnimation {
+protected:
+  ofVMouse anim;
+public:
+  ofAnimation(){
+    anim.setup(this);
+  }
+  virtual void animationStepRequested(){}
 };

@@ -63,8 +63,9 @@ ofVMouse::~ofVMouse()
 	events.clear();
 }
 
-void ofVMouse::setup()
+void ofVMouse::setup(ofAnimation * anim)
 {
+  animHolder=anim;
 	x=y=0;
 	mouseState=0;
 	startTime=0;
@@ -152,7 +153,10 @@ void ofVMouse::updateNextEvent()
 	if(running){
     if(curEvent.type==OF_VMOUSE_END) running=false,curEvent.type=OF_VMOUSE_BLANK;
     else if(curEvent.type==OF_VMOUSE_BLANK){
-      appPtr->keyPressed('n');
+      if(!animHolder)
+        appPtr->keyPressed('n');
+      else if(animHolder)
+        animHolder->animationStepRequested();
       startTime=ofGetElapsedTimeMillis();
     }
     else if (!ran&&!curEvent.executed&&startTime+sumTime+curEvent.duration>timeNow) {
@@ -177,7 +181,10 @@ void ofVMouse::updateNextEvent()
       }
       
       //******* signal the app to grab next event
-      appPtr->keyPressed('n');
+      if(!animHolder)
+        appPtr->keyPressed('n');
+      else if(animHolder)
+        animHolder->animationStepRequested();
       
       startTime=ofGetElapsedTimeMillis();
     }

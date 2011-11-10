@@ -42,7 +42,7 @@ double operaterByChar(double a, char op, double b){
 string getWord(string buffer,unsigned int & first, string delims)
 {
 	string ret;
-	bool found;
+	bool found=0;
 	for (unsigned int i=first; i<buffer.length(); i++) {
 		if(isDelim(buffer[i], delims)){
 			found=true;
@@ -51,6 +51,10 @@ string getWord(string buffer,unsigned int & first, string delims)
 			break;
 		}
 	}
+  if(!found){
+    ret="";//string(buffer,first,(buffer.length()-1)-first);
+    first=buffer.length();
+  }
 	return ret;
 }
 
