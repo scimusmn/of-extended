@@ -77,7 +77,7 @@ bool ofSlider::clickUp()
   for (int i=0; i<divs+1; i++) {
     //cout << knob.relPos.x << " & " <<i*w/divs << endl;
 //    cout << "abs " << abs(knob.relPos.x-i*w/divs) <<" compared to " << w/divs << endl;
-    if(abs(knob.relPos.x-i*w/divs)<w/(2*divs)) knob.relPos.x=i*w/divs;
+    if(0&&abs(knob.relPos.x-i*w/divs)<w/(2*divs)) knob.relPos.x=i*w/divs;
   }
   //cout << endl;
   return ret;
@@ -98,4 +98,12 @@ void ofSlider::update()
 double ofSlider::getPercent()
 {
   return knob.relPos.x/w;
+}
+
+
+void ofSlider::setPercent(double prc)
+{
+  if(prc<0) prc=0;
+  else if(prc>1) prc=1;
+  knob.relPos.x=w*prc;
 }

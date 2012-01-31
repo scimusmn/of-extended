@@ -15,7 +15,7 @@
 #define VMOUSE_BUTTON 5
 
 enum vMouseType {
-	OF_VMOUSE_CLICK_DOWN, OF_VMOUSE_MOVE_TO, OF_VMOUSE_CLICK_UP, OF_VMOUSE_END, OF_VMOUSE_BLANK 
+	OF_VMOUSE_BLANK, OF_VMOUSE_CLICK_DOWN, OF_VMOUSE_MOVE_TO, OF_VMOUSE_CLICK_UP, OF_VMOUSE_END, OF_VMOUSE_COMPOUND
 };
 
 class ofAnimation;
@@ -62,6 +62,7 @@ public:
 	bool isClicked(){ return mouseState;}
 	void play();
 	void pause();
+  void stop();
 	void reset();
 	void update();
   void updateNextEvent();

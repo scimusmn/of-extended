@@ -43,7 +43,7 @@ public:
 	bool getAvailable(){ return bAvailable;}
 	void setPressed(bool t);
 	void setTitle(string ttl);
-	void setTextSize(int pt);
+	virtual void setTextSize(int pt);
 	virtual void motion(int _x, int _y){};
 	virtual void keyboard(char k){};
 	virtual void update(){};

@@ -13,6 +13,7 @@
 #include "ofButton.h"
 
 class ofScrollTab : public ofButton {
+protected:
 	bool vert;
 public:
 	void setup(double span, bool vert);
@@ -24,8 +25,9 @@ public:
 };
 
 class ofScrollBar : public ofInterObj{
+protected:
 	ofScrollTab tab;
-	double viewSize, fullSize, fullEx,exDisp;
+	double viewSize, fullSize, tabRange,endPad;
 	bool vert;
 	double xDisp, yDisp;
 public:
@@ -34,6 +36,7 @@ public:
 	void setup(double span, double length, ofDirection DIRECTION);
 	void registerArea(double vSize, double fSize);
 	double getScrollPercent();
+  void setScrollPercent(double perc);
 	bool setScrollPosition(double newPos);
 	double getScrollPosition();
 	bool clickDown(int _x, int _y);

@@ -26,7 +26,7 @@ string ssprintf(const char * format, ...)
 	int num=0;
 	for(unsigned int i=0; i<temp.length(); i++){
 		if(temp[i]=='%'){
-			string t=getWord(temp,++i,"idsec%");
+			string t=getWord(temp,++i,"idsecx%");
 			t+=temp[i];
 			bool padWithZero=false;
 			for(unsigned int j=0; j<t.size(); j++){
@@ -38,6 +38,10 @@ string ssprintf(const char * format, ...)
 				if(t[j]=='i'){
 					int arg = va_arg(vl,int);
 					sstr << arg;
+				}
+        if(t[j]=='x'){
+					int arg = va_arg(vl,int);
+					sstr << std::hex << arg;
 				}
 				if(t[j]=='s'){
 					char * arg = va_arg(vl,char *);
@@ -170,8 +174,8 @@ void ofFont::drawString(string s, int x, int y)
 {
 	if(FONT_MODE==OF_FONT_CENTER) x=(x-stringWidth(s)/2);
 	else if(FONT_MODE==OF_FONT_RIGHT) x=(x-stringWidth(s));
-	if(V_FONT_MODE==OF_FONT_MID) y=(y+stringHeight("Kj")/2);
-	else if(V_FONT_MODE==OF_FONT_TOP) y=(y+stringHeight("K"));
+	if(V_FONT_MODE==OF_FONT_MID) y=(y+stringHeight("m")/2);
+	else if(V_FONT_MODE==OF_FONT_TOP) y=(y+stringHeight("m"));
 	fonts[setNum].drawString(s,x,y);
 }
 
@@ -179,8 +183,8 @@ ofRectangle ofFont::getBoundingBox(string s, int x, int y)
 {
 	if(FONT_MODE==OF_FONT_CENTER) x=(x-stringWidth(s)/2);
 	else if(FONT_MODE==OF_FONT_RIGHT) x=(x-stringWidth(s));
-  if(V_FONT_MODE==OF_FONT_MID) y=(y+stringHeight("Kj")/2);
-	else if(V_FONT_MODE==OF_FONT_TOP) y=(y+stringHeight("K"));
+  if(V_FONT_MODE==OF_FONT_MID) y=(y+stringHeight("m")/2);
+	else if(V_FONT_MODE==OF_FONT_TOP) y=(y+stringHeight("m"));
 	return fonts[setNum].getStringBoundingBox(s,x,y);
 }
 

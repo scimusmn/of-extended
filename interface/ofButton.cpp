@@ -36,6 +36,7 @@ void ofButton::setup(int dimension, ofDirection dir,string imageName, string prs
 	bAvailable=true;
 	img=imageName;
 	img2=prsImage;
+  if(img2.length()) pressImage.loadImage(prsImage);
 }  
 
 void ofButton::setup(int _w, int _h, string imageName, string prsImage)
@@ -86,11 +87,12 @@ void ofButton::draw(int _x, int _y, int _w, int _h)
   if(_h<=0) y=_y+_h, h=-_h; 
 	if(!bPressed&&bAvailable) ofSetColor(255, 255, 255);
 	else if(!bPressed&&!bAvailable) ofSetColor(255, 255, 255,128);
-	else ofSetColor(128, 128, 128);
+	else if(!img2.length()) ofSetColor(128, 128, 128);
+  else ofSetColor(255,255,255);
 	ofEnableSmoothing();
 	if(img.length()){
 		if((!img2.length())||!bPressed) background.draw(x, _y,_w,_h);
-		if(img2.length()&&bPressed) pressImage.draw(x, y,w,h);
+		if(img2.length()&&bPressed) pressImage.draw(x, _y,_w,_h);
 	}
 	else {
 		int curW=arial.stringWidth(title);

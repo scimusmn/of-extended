@@ -20,11 +20,12 @@ public:
   ofSlider();
   ofSlider(int knobW, int knobH);
   void setup(int knobW, int knobH);
-  void draw(int _x, int _y, int _w, int _h);
-  void draw(int _x, int _y);
+  virtual void draw(int _x, int _y, int _w, int _h);
+  virtual void draw(int _x, int _y);
   bool clickDown(int _x, int _y);
   bool clickUp();
   void drag(int _x, int _y);
   void update();
   double getPercent();
+  void setPercent(double prc);
 };

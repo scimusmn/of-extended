@@ -46,6 +46,7 @@ void ofTimer::reset(){
   elapsed=0;
   remaining=originalTime;
   timeSet=ofGetElapsedTimeMillis();
+  alarm=timeSet;
 	bSet=false;
 }
 

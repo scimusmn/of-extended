@@ -23,6 +23,7 @@ const char *asString(double i);
 
 
 class ofDropDown: public ofInterObj {
+protected:
 	vector<string> values;
 public:
 	bool deci;

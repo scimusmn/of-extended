@@ -111,6 +111,14 @@ void ofVMouse::reset()
 	}
 }
 
+void ofVMouse::stop()
+{
+  elapsedAtPause=0;
+  events.clear();
+  running=false;
+  curEvent.type=OF_VMOUSE_BLANK;
+}
+
 void ofVMouse::update()
 {
 	unsigned long sumTime=elapsedAtPause;

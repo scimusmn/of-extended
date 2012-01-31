@@ -29,7 +29,7 @@ ofDropDown::ofDropDown():ofInterObj(){
 }
 
 ofDropDown::ofDropDown(int _x, int _y,int _w,int _h,int low, int hi, int stps):ofInterObj(_x,_y,_w,_h){
-	arial.loadFont("fonts/Arial.ttf");
+	arial.loadFont("fonts/HelveticaCond.otf");
 	arial.setSize(10);
 	steps=stps;
 	var=0;
@@ -41,7 +41,7 @@ ofDropDown::ofDropDown(int _x, int _y,int _w,int _h,int low, int hi, int stps):o
 
 ofDropDown::ofDropDown(ofTag xml):ofInterObj(){
 	curPos=0;
-	arial.loadFont("fonts/Arial.ttf");
+	arial.loadFont("fonts/HelveticaCond.otf");
 	arial.setSize(10);
 	open=selected=bOver=false;
 	deci=false;
@@ -244,7 +244,7 @@ void ofDropDown::drawShape(){
 
 bool ofDropDown::clickDown(int _x,int _y){
 	bool ret=false;
-	int yDisp=(curPos>=nDisp&&curPos<nDisp+values.size()%10)?curPos%10:0;
+	int yDisp=(bAutoAdj&&curPos>=nDisp&&curPos<nDisp+values.size()%10)?curPos%10:0;
 	if (over(_x,_y)&&!open&&!nOpen.length()) {
 		open=ret=true;
 		selected=false;
@@ -254,19 +254,19 @@ bool ofDropDown::clickDown(int _x,int _y){
 		selected=false;
 	}
 	else if(open&&_x>x&&_x<x+w&&_y>y-h*yDisp&&_y<y+h*(steps+2-yDisp)){
-		if(y-5<h*curPos||!bAutoAdj) yDisp=0;
-		for (int i=0; i<steps; i++) {
-			if(_y>y-h*yDisp&&_y<y+h*(steps-yDisp)){
-				if(_y>y+h*(i-yDisp)&&_y<y+h*(i+1-yDisp)){
+		if(y-5<h*curPos) yDisp=0;
+    if(_y>y-h*yDisp&&_y<y+h*(steps-yDisp)){
+      for (int i=0; i<steps; i++) {
+				if(_y>y+h*(i-yDisp)&&_y<=y+h*(i+1-yDisp)){
 					curPos=i+nDisp;
 					selected=true;
 				}
 				open=ret=false;
 				if (selected) {
-					break;
+					return ret;
 				}
-			}
-		}
+      }
+    }
 		if(values.size()>10&&_y>y+h*(steps-yDisp)&&_y<y+h*(steps+1-yDisp)&&nDisp>=10){
 			nDisp-=10;
 		}

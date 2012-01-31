@@ -14,6 +14,8 @@ void ofScrollTab::setup(double span, bool vrt)
 	vert=vrt;
 	if (!vert) h=span;
 	else if (vert) w=span;
+  
+  relPos.x=relPos.y=0;
 }
 
 void ofScrollTab::draw(int _x, int _y)
@@ -35,15 +37,15 @@ void ofScrollTab::draw()
 	ofColor k=ofGetStyle().color;
 	ofSetColor((getAvailable())?k:k+.4*255);
   ofRaised(.3);
-	ofRoundedRect(x, y, w, h, r);
+	ofRoundedRect(x+relPos.x, y+relPos.y, w, h, r);
   ofFlat();
 	ofSetColor(0, 0, 0,16*k.a/255.);
 	ofSetLineWidth(1);
 	if(vert) for(int i=1; i<(h-w)/4; i++){
-		ofLine(x+2, y+w/2+i*4, x+w-2, y+w/2+i*4);
+		ofLine(x+relPos.x+2, y+relPos.x+w/2+i*4, x+w-2, y+w/2+i*4);
 	}
 	else for(int i=1; i<(w-h)/4; i++){
-		ofLine(x+h/2+i*4, y+2, x+h/2+i*4, y+h-2);
+		ofLine(x+relPos.x+h/2+i*4, y+relPos.x+2, x+h/2+i*4, y+h-2);
 	}
 }
 
@@ -60,8 +62,8 @@ ofScrollBar::~ofScrollBar()
 void ofScrollBar::setup(double span, double length, ofDirection DIRECTION)
 {
 	vert=(OF_VERT==DIRECTION);
-	if (!vert) h=span, w=length, fullEx=length-4,exDisp=(w-fullEx)/2;
-	else w=span, h=length, fullEx=length-4,exDisp=(h-fullEx)/2;
+	if (!vert) h=span, w=length, tabRange=length-4,endPad=(w-tabRange)/2;
+	else w=span, h=length, tabRange=length-4,endPad=(h-tabRange)/2;
 	tab.setup(span-2,vert);
 }
 
@@ -70,17 +72,20 @@ void ofScrollBar::registerArea(double vSize, double fSize)
 	viewSize=vSize;
 	fullSize=fSize;
 	double perc=((viewSize/fullSize)>=1)?1:(viewSize/fullSize);
-	if (!vert) tab.w=perc*(fullEx-2);
-	else tab.h=perc*(fullEx-2);
+	if (!vert) tab.w=perc*(tabRange-2);
+	else tab.h=perc*(tabRange-2);
 	tab.setAvailable((fullSize/viewSize)>1);
+  
+  if(vert) tab.relPos.y=endPad+1;
+  else tab.relPos.x=endPad+1;
 }
 
 bool ofScrollBar::clickDown(int _x, int _y)
 {
 	bool ret=false;
-	if(tab.clickDown(_x, _y)){
-    relMouse.x=_x-tab.x;
-		relMouse.y=_y-tab.y;
+	if(tab.clickDown(_x-tab.relPos.x, _y-tab.relPos.y)){
+    relMouse.x=_x-(tab.x+tab.relPos.x);
+		relMouse.y=_y-(tab.y+tab.relPos.y);
 	}
 	else if(over(_x, _y))
 		tab.setPressed(true);
@@ -100,13 +105,13 @@ void ofScrollBar::draw(int _x, int _y)
   ofColor k=ofGetStyle().color;
 	x=_x, y=_y;
 	double r=(vert)?w/2.:h/2.;
-	double off=(vert)?(h-fullEx)/2.:(w-fullEx)/2.;
+	double off=(vert)?(h-tabRange)/2.:(w-tabRange)/2.;
 	ofSetColor(210, 210, 210, k.a);
 	ofRect(x, y, (vert)?w+2:w, (vert)?h:h+2);
 	ofSetColor(150, 150, 150, k.a);
-	ofRoundedRect((vert)?x+1:x+off, (vert)?y+off:y+1, (vert)?w:fullEx, (!vert)?h:fullEx, r);
+	ofRoundedRect((vert)?x+1:x+off, (vert)?y+off:y+1, (vert)?w:tabRange, (!vert)?h:tabRange, r);
   ofSetColor(60, 170, 220,k.a);
-	tab.draw((vert)?x+2:y+2);
+	tab.draw(x,y);
 }
 
 bool ofScrollBar::mouseMotion(int _x, int _y)
@@ -114,14 +119,14 @@ bool ofScrollBar::mouseMotion(int _x, int _y)
 	bool ret=false;
 	if(ret=tab.pressed()){
 		if (!vert) {
-			if(_x-relMouse.x<x+exDisp+1) tab.x=x+exDisp+1;
-			else if(_x+tab.w-relMouse.x>x+w-exDisp-1) tab.x=x+w-exDisp-tab.w-1;
-			else tab.x=_x-relMouse.x;
+			if(_x-relMouse.x<tab.x+endPad+1) tab.relPos.x=endPad+1;
+			else if(_x+tab.w-relMouse.x>tab.x+w-endPad-1) tab.relPos.x=w-endPad-tab.w-1;
+			else tab.relPos.x=(_x-tab.x)-relMouse.x;
 		}
 		else {
-			if(_y-relMouse.y<y+exDisp+1) tab.y=y+exDisp+1;
-			else if(_y+tab.h-relMouse.y>y+h-exDisp-1) tab.y=y+h-exDisp-tab.h-1;
-			else tab.y=_y-relMouse.y;
+			if(_y-relMouse.y<tab.y+endPad+1) tab.relPos.y=endPad+1;
+			else if(_y+tab.h-relMouse.y>tab.y+h-endPad-1) tab.relPos.y=h-endPad-tab.h-1;
+			else tab.relPos.y=(_y-tab.y)-relMouse.y;
 		}
 	}
 	return ret;
@@ -130,8 +135,9 @@ bool ofScrollBar::mouseMotion(int _x, int _y)
 double ofScrollBar::getScrollPercent()
 {
 	double ret=0;
-	if (vert) ret=(tab.y-y-exDisp)/(fullEx-tab.h);
-	else ret=(tab.x-x-exDisp)/(fullEx-tab.w);
+	if (vert) ret=(tab.relPos.y-endPad)/(tabRange-tab.h);
+	else ret=(tab.relPos.x-endPad)/(tabRange-tab.w);
+  if((fullSize/viewSize)<=1) ret=1;
 	return ret;
 }
 
@@ -143,22 +149,29 @@ double ofScrollBar::getScrollPosition()
 	return ret;
 }
 
+void ofScrollBar::setScrollPercent(double perc)
+{
+  perc=ofClamp(perc, 0, 1);
+  if (vert) tab.relPos.y=perc*(tabRange-tab.h)+endPad;
+	else tab.relPos.x=perc*(tabRange-tab.w)+endPad;
+}
+
 bool ofScrollBar::setScrollPosition(double newPos)
 {
 	bool ret=false;
 	if(1){
 		ret=true;
 		if(vert){
-			double pos=newPos*(fullEx-tab.h)/(fullSize-viewSize)+exDisp;
-			if(pos<exDisp) pos=exDisp;
-			else if(pos+tab.h>h-exDisp*2) pos=h-exDisp*2-tab.h;
-			tab.y=pos+y;
+			double pos=newPos*(tabRange-tab.h)/(fullSize-viewSize)+endPad;
+			if(pos<endPad) pos=endPad+1;
+			else if(pos+tab.h>h-(endPad+1)*2) pos=h-(endPad+1)*2-tab.h;
+			tab.relPos.y=pos;
 		}
 		else {
-			double pos=newPos*(fullEx-tab.w)/(fullSize-viewSize)+exDisp;
-			if(pos<exDisp+1) pos=exDisp+1;
-			else if(pos+tab.w>w-exDisp*2-2) pos=w-exDisp*2-2-tab.w;
-			tab.x=pos+x;
+			double pos=newPos*(tabRange-tab.w)/(fullSize-viewSize)+endPad;
+			if(pos<endPad+1) pos=endPad+1;
+			else if(pos+tab.w>w-endPad*2-2) pos=w-endPad*2-2-tab.w;
+			tab.relPos.x=pos;
 		}
 	}
 	return	ret;
@@ -167,19 +180,19 @@ bool ofScrollBar::setScrollPosition(double newPos)
 
 void ofScrollBar::update(double percent)
 {
-	if (!vert) tab.w=percent*(fullEx-2);
-	else tab.h=percent*(fullEx-2);
+	if (!vert) tab.w=percent*(tabRange-2);
+	else tab.h=percent*(tabRange-2);
 }
 	
 void ofScrollBar::update()
 {
 	if(!vert){
-		if(tab.x<x+exDisp+1) tab.x=x+exDisp+1;
-		else if(tab.x+tab.w>x+w-exDisp-1) tab.x=x+w-exDisp*2-tab.w-1;
+		if(tab.relPos.x<endPad+1) tab.relPos.x=endPad+1;
+		else if(tab.relPos.x+tab.w>w-endPad-1) tab.relPos.x=w-endPad*2-tab.w-1;
 	}
 	else {
-		if(tab.y<y+exDisp+1) tab.y=y+exDisp+1;
-		else if(tab.y+tab.h>y+h-exDisp-1) tab.y=y+h-exDisp*2-tab.h-1;
+		if(tab.y<y+endPad+1) tab.relPos.y=endPad+1;
+		else if(tab.y+tab.h>y+h-endPad-1) tab.relPos.y=h-endPad*2-tab.h-1;
 	}
 
 	tab.setAvailable((fullSize/viewSize)>1);
