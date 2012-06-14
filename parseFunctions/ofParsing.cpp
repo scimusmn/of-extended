@@ -76,3 +76,8 @@ string peekWord(string buffer,unsigned int first, string delims)
 string ofGetFilename(string path){
   return path.substr(path.find_last_of("/\\")+1,path.length());
 }
+
+string de_UnixPath(string path){
+  std::replace( path.begin(), path.end(), '/', '\\' );
+  return path;
+}

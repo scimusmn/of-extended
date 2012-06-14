@@ -39,6 +39,8 @@ public:
 	float 		stringWidth(string s);
 	float 		stringHeight(string s);
 	void		setMode(ofFontMode MODE);
+	ofFontMode	getVertMode();
+	ofFontMode	getHorMode();
 };
 
 class ofFontContainer {

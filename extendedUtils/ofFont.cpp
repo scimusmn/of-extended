@@ -136,6 +136,16 @@ void ofFont::setMode(ofFontMode mode){
 	else V_FONT_MODE=mode;
 }
 
+ofFontMode	ofFont::getVertMode()
+{
+	return V_FONT_MODE;
+}
+
+ofFontMode	ofFont::getHorMode()
+{
+	return FONT_MODE;
+}
+
 void ofFont::loadFont(string filename)
 {
 	file=filename;

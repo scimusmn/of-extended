@@ -19,3 +19,5 @@ string getWord(string buffer,unsigned int & first, string delims);
 string peekWord(string buffer,unsigned int first, string delims);
 
 string ofGetFilename(string path);
+
+string de_UnixPath(string path);

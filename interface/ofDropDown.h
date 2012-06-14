@@ -19,7 +19,7 @@
 #include <vector>
 #include <algorithm>
 
-const char *asString(double i);
+string asString(double i);
 
 
 class ofDropDown: public ofInterObj {

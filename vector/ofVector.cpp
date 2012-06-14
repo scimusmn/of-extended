@@ -103,7 +103,7 @@ ofVector ofVector::rotate(double deg)
 
 double ofVector::angleDifference(ofVector b)
 {
-  
+  return 0;
 }
 
 double ofVector::absoluteAngle()

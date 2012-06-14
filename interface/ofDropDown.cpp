@@ -9,11 +9,11 @@
 
 #include "ofDropDown.h"
 
-const char *asString(double i)
+string asString(double i)
 {
   	stringstream oss;
   	oss << i; oss.flush();
-	return oss.str().c_str();
+	return oss.str();
 }
 
 ofDropDown::ofDropDown():ofInterObj(){
@@ -42,7 +42,7 @@ ofDropDown::ofDropDown(int _x, int _y,int _w,int _h,int low, int hi, int stps):o
 ofDropDown::ofDropDown(ofTag xml):ofInterObj(){
 	curPos=0;
 	arial.loadFont("fonts/HelveticaCond.otf");
-	arial.setSize(10);
+	arial.setSize(14);
 	open=selected=bOver=false;
 	deci=false;
 	nDisp=0;
@@ -138,7 +138,7 @@ void ofDropDown::adjustSizeToStrings()
 		tempWid=max(tempWid, arial.stringWidth(values[i]));
 		tempHgt=max(tempHgt, arial.stringHeight(values[i]));
 	}
-  if(values.size()>11) tempWid=max(tempWid, arial.stringWidth("previous page"));
+	if(values.size()>11) tempWid=max(tempWid, arial.stringWidth("previous page"));
 	h=tempHgt+4;
 	w=tempWid+7+h;
 }
