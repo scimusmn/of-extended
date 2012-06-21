@@ -47,7 +47,11 @@ ofDropDown::ofDropDown(ofTag xml):ofInterObj(){
 	deci=false;
 	nDisp=0;
 	cursorPos=-1;
-	int ddhigh=0;
+	init(xml);
+}
+
+void ofDropDown::init(ofTag &xml){
+  int ddhigh=0;
 	int ddlow=0;
 	int numSteps=0;
 	string sel;

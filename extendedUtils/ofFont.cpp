@@ -136,6 +136,7 @@ void ofFont::setMode(ofFontMode mode){
 	else V_FONT_MODE=mode;
 }
 
+<<<<<<< HEAD
 ofFontMode	ofFont::getVertMode()
 {
 	return V_FONT_MODE;
@@ -144,6 +145,14 @@ ofFontMode	ofFont::getVertMode()
 ofFontMode	ofFont::getHorMode()
 {
 	return FONT_MODE;
+=======
+ofFontMode ofFont::getVertMode(){
+  return V_FONT_MODE;
+}
+
+ofFontMode ofFont::getHorMode(){
+  return FONT_MODE;
+>>>>>>> changes between OSX and windows
 }
 
 void ofFont::loadFont(string filename)

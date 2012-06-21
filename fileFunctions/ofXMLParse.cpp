@@ -206,7 +206,7 @@ void ofXML::loadFile(string file)
 							popTag();
 							i--;
 						}
-						else ofLog(OF_LOG_WARNING, "Tags don't match");
+						else ofLog(OF_LOG_WARNING, "Tags don't match: "+close+" and " +currentTag());
 					}
 					else {
 						string newLabel=getWord(buffer, i, " >");
@@ -236,7 +236,7 @@ void ofXML::loadFile(string file)
 					addAttribute(aName,aValue);
 				}
 			}
-			else if(!tagOpen&&buffer[i]!='\t'&&buffer[i]!='\n'){
+			else if(!tagOpen&&buffer[i]!='\t'&&buffer[i]!='\r'&&buffer[i]!='\n'){
 				string val=getWord(buffer,i,"<");
 				i--;
 				currentLevel->setValue(val);
@@ -391,7 +391,7 @@ bool ofXML::pushTag(string lbl,int which)
 		prevLevel.push(currentLevel);
 		currentLevel=&getTag(lbl, which);
 	}
-	else ofLog(OF_LOG_WARNING, "Tag not found");
+	else ofLog(OF_LOG_WARNING, "Tag not found: "+lbl+". Current level is "+currentTag());
 	return ret;
 }
 
